@@ -213,6 +213,10 @@ func main() {
 					Usage: `automatically include releases from the target release's "needs" when --selector/-l flag is provided. Does nothing when when --selector/-l flag is not provided`,
 				},
 				cli.BoolFlag{
+					Name:  "include-transitive-needs",
+					Usage: `like --include-needs, but also includes transitive needs (needs of needs). Does nothing when when --selector/-l flag is not provided. Overrides exclusions of other selectors and conditions.`,
+				},
+				cli.BoolFlag{
 					Name:  "skip-diff-on-install",
 					Usage: "Skips running helm-diff on releases being newly installed on this apply. Useful when the release manifests are too huge to be reviewed, or it's too time-consuming to diff at all",
 				},
@@ -296,6 +300,10 @@ func main() {
 					Usage: "skip tests from templated output",
 				},
 				cli.BoolFlag{
+					Name:  "skip-needs",
+					Usage: `do not automatically include releases from the target release's "needs" when --selector/-l flag is provided. Does nothing when when --selector/-l flag is not provided. Defaults to true when --include-needs or --include-transitive-needs is not provided`,
+				},
+				cli.BoolFlag{
 					Name:  "include-needs",
 					Usage: `automatically include releases from the target release's "needs" when --selector/-l flag is provided. Does nothing when when --selector/-l flag is not provided`,
 				},
@@ -367,6 +375,18 @@ func main() {
 					Name:  "concurrency",
 					Value: 0,
 					Usage: "maximum number of concurrent downloads of release charts",
+				},
+				cli.BoolTFlag{
+					Name:  "skip-needs",
+					Usage: `do not automatically include releases from the target release's "needs" when --selector/-l flag is provided. Does nothing when when --selector/-l flag is not provided. Defaults to true when --include-needs or --include-transitive-needs is not provided`,
+				},
+				cli.BoolFlag{
+					Name:  "include-needs",
+					Usage: `automatically include releases from the target release's "needs" when --selector/-l flag is provided. Does nothing when when --selector/-l flag is not provided`,
+				},
+				cli.BoolFlag{
+					Name:  "include-transitive-needs",
+					Usage: `like --include-needs, but also includes transitive needs (needs of needs). Does nothing when when --selector/-l flag is not provided. Overrides exclusions of other selectors and conditions.`,
 				},
 				cli.BoolFlag{
 					Name:  "skip-deps",

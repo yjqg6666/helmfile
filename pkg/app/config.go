@@ -66,9 +66,7 @@ type ApplyConfigProvider interface {
 	SkipCleanup() bool
 	SkipDiffOnInstall() bool
 
-	SkipNeeds() bool
-	IncludeNeeds() bool
-	IncludeTransitiveNeeds() bool
+	DAGConfig
 
 	concurrencyConfig
 	interactive
@@ -85,9 +83,7 @@ type SyncConfigProvider interface {
 	Wait() bool
 	WaitForJobs() bool
 
-	SkipNeeds() bool
-	IncludeNeeds() bool
-	IncludeTransitiveNeeds() bool
+	DAGConfig
 
 	concurrencyConfig
 	loggingConfig
@@ -110,8 +106,7 @@ type DiffConfigProvider interface {
 	SuppressDiff() bool
 	SkipDiffOnInstall() bool
 
-	SkipNeeds() bool
-	IncludeNeeds() bool
+	DAGConfig
 
 	DetailedExitcode() bool
 	Color() bool
@@ -162,6 +157,8 @@ type LintConfigProvider interface {
 	SkipDeps() bool
 	SkipCleanup() bool
 
+	DAGConfig
+
 	concurrencyConfig
 }
 
@@ -184,10 +181,16 @@ type TemplateConfigProvider interface {
 	SkipTests() bool
 	OutputDir() string
 	IncludeCRDs() bool
-	IncludeNeeds() bool
-	IncludeTransitiveNeeds() bool
+
+	DAGConfig
 
 	concurrencyConfig
+}
+
+type DAGConfig interface {
+	SkipNeeds() bool
+	IncludeNeeds() bool
+	IncludeTransitiveNeeds() bool
 }
 
 type WriteValuesConfigProvider interface {
